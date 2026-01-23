@@ -28,4 +28,4 @@ jobs:
           name: my_artifacts
       
       - name: Print artifact
-        run: cat artifact.txt
+        run: cat artifacts.txt
