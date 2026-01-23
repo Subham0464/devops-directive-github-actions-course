@@ -25,7 +25,7 @@ jobs:
       - name: download artifact
         uses: actions/download-artifact@v4
         with:
-          name: my_artifact
+          name: my_artifacts
       
       - name: Print artifact
         run: cat artifact.txt
