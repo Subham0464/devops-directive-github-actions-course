@@ -1,0 +1,35 @@
+name: Practice Caching
+on:
+  workflow_dispatch:
+
+jobs:
+  cache-demo:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Restore Cache
+        id: practice-cache
+        uses: actions/cache@v4
+        with: 
+          path: practice-cache
+          key: practice-cache-v1
+      
+      - name: Populate Cache
+        id: practice-populate-cache
+        if: steps.practice-cache.outputs.cache-hit != 'true'
+        run: |
+          echo "Cache not found. Generating contents."
+          mkdir -p practice-cache 
+          date > practice-cache/timestamp.txt
+        
+      - name: Save Cache
+        id: practice-save-cache
+        if: steps.demo-cache.outputs.cache-hit != 'true'
+        uses: actions/cache@v4
+        with:
+          path: practice-cache
+          key: practice-cache-v1
+      
+      - name: Verify Cache Status
+        run: |
+          echo "cache-hit? -> ${{ steps.practice-cache.outputs.cache-hit }}"
+          cat practice-cache/timestamp.txt
